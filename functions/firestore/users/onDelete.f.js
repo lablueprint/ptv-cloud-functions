@@ -1,13 +1,11 @@
 import { firestore } from 'firebase-functions';
-import admin from 'firebase-admin';
+
+const admin = require('firebase-admin');
 
 export default firestore
   .document('users/{userId}')
-  .onDelete((snap, context) => {
+  .onDelete((_, context) => {
     const { userId } = context.params;
-    const bucket = admin.storage().bucket();
 
-    return bucket.deleteFiles({
-      prefix: `users/${userId}`,
-    });
+    return admin.auth().deleteUser(userId);
   });

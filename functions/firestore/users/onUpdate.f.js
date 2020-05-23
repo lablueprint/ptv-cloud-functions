@@ -8,9 +8,7 @@ export default firestore
     const { userId } = context.params;
     const currBody = change.after.data();
 
-    admin.auth().updateUser(userId, {
+    return admin.auth().updateUser(userId, {
       disabled: currBody.isBanned,
     });
-
-    return null;
   });
